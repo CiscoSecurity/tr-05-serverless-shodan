@@ -4,8 +4,6 @@
   "visibility": "org",
   "settings": {
     "url": "${URL}",
-    "auth-type": "authorization-header",
-    "authorization-header": "Bearer ${JWT}",
     "supported-apis": [
       "health",
       "observe/observables",
