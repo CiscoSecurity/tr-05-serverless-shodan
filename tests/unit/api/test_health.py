@@ -22,38 +22,32 @@ def shodan_request():
         yield mock_request
 
 
-def shodan_response(*, ok, status_error=None):
+def shodan_response(*, status_code):
     mock_response = mock.MagicMock()
 
-    mock_response.ok = ok
+    mock_response.status_code = status_code
 
-    if ok:
-        mock_response.status_code = 200
-    else:
-        if status_error == 404:
-            mock_response.status_code = 404
-        elif status_error == 500:
-            mock_response.status_code = 500
+    mock_response.ok = status_code == HTTPStatus.OK
 
     return mock_response
 
 
 def test_health_call_success(route, client, shodan_request):
-    shodan_request.return_value = shodan_response(ok=True)
+    shodan_request.return_value = shodan_response(status_code=200)
     response = client.post(route)
     assert response.status_code == HTTPStatus.OK
     assert response.get_json() == {'data': {'status': 'ok'}}
 
 
 def test_health_call_404(route, client, shodan_request):
-    shodan_request.return_value = shodan_response(ok=False, status_error=404)
+    shodan_request.return_value = shodan_response(status_code=404)
     response = client.post(route)
     assert response.status_code == HTTPStatus.OK
     assert response.get_json() == EXPECTED_RESPONSE_404_ERROR
 
 
 def test_health_call_500(route, client, shodan_request):
-    shodan_request.return_value = shodan_response(ok=False, status_error=500)
+    shodan_request.return_value = shodan_response(status_code=500)
     response = client.post(route)
     assert response.status_code == HTTPStatus.OK
     assert response.get_json() == EXPECTED_RESPONSE_500_ERROR
