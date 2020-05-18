@@ -27,7 +27,4 @@ def jsonify_data(data):
 
 
 def jsonify_errors(error):
-    error['type'] = 'fatal'
-    error['code'] = error.pop('code').lower().replace('_', ' ')
-
     return jsonify({'errors': [error]})
