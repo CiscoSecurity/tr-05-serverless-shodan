@@ -1,8 +1,10 @@
 from http import HTTPStatus
 
 from pytest import fixture
+from unittest import mock
 
-from .utils import headers
+from tests.unit.payloads_for_tests import (EXPECTED_RESPONSE_404_ERROR,
+                                           EXPECTED_RESPONSE_500_ERROR)
 
 
 def routes():
@@ -14,11 +16,38 @@ def route(request):
     return request.param
 
 
-def test_health_call_with_invalid_jwt_failure(route, client, invalid_jwt):
-    response = client.post(route, headers=headers(invalid_jwt))
-    assert response.status_code == HTTPStatus.FORBIDDEN
+@fixture(scope='function')
+def shodan_request():
+    with mock.patch('requests.head') as mock_request:
+        yield mock_request
 
 
-def test_health_call_success(route, client, valid_jwt):
-    response = client.post(route, headers=headers(valid_jwt))
+def shodan_response(*, status_code):
+    mock_response = mock.MagicMock()
+
+    mock_response.status_code = status_code
+
+    mock_response.ok = status_code == HTTPStatus.OK
+
+    return mock_response
+
+
+def test_health_call_success(route, client, shodan_request):
+    shodan_request.return_value = shodan_response(status_code=200)
+    response = client.post(route)
     assert response.status_code == HTTPStatus.OK
+    assert response.get_json() == {'data': {'status': 'ok'}}
+
+
+def test_health_call_404(route, client, shodan_request):
+    shodan_request.return_value = shodan_response(status_code=404)
+    response = client.post(route)
+    assert response.status_code == HTTPStatus.OK
+    assert response.get_json() == EXPECTED_RESPONSE_404_ERROR
+
+
+def test_health_call_500(route, client, shodan_request):
+    shodan_request.return_value = shodan_response(status_code=500)
+    response = client.post(route)
+    assert response.status_code == HTTPStatus.OK
+    assert response.get_json() == EXPECTED_RESPONSE_500_ERROR
