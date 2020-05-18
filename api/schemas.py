@@ -62,4 +62,3 @@ class ObservableSchema(Schema):
         validate=validate_string,
         required=True,
     )
-
