@@ -20,11 +20,9 @@ def invalid_json():
 
 
 def test_enrich_call_with_invalid_json_failure(
-        route, client,  invalid_json, invalid_json_expected_payload,
+        route, client,  invalid_json, invalid_json_expected_payload
 ):
-    response = client.post(
-        route,  json=invalid_json
-    )
+    response = client.post(route,  json=invalid_json)
 
     assert response.status_code == HTTPStatus.OK
     assert response.json == invalid_json_expected_payload
@@ -32,9 +30,12 @@ def test_enrich_call_with_invalid_json_failure(
 
 @fixture(scope='module')
 def valid_json():
-    return [{'type': 'domain', 'value': 'cisco.com'}]
+    return [{'type': 'ip', 'value': '185.53.179.29'}]
 
 
-def test_enrich_call_success(route, client,  valid_json):
+def test_enrich_call_success(
+        route, client,  valid_json, success_expected_payload
+):
     response = client.post(route, json=valid_json)
     assert response.status_code == HTTPStatus.OK
+    assert response.json == success_expected_payload

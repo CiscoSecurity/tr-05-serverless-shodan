@@ -1,6 +1,7 @@
 from functools import partial
 
-from flask import Blueprint
+from flask import Blueprint, current_app
+from urllib.parse import quote
 
 from api.schemas import ObservableSchema
 from api.utils import get_json, jsonify_data
@@ -25,5 +26,22 @@ def observe_observables():
 
 @enrich_api.route('/refer/observables', methods=['POST'])
 def refer_observables():
-    _ = get_observables()
-    return jsonify_data([])
+    observables = get_observables()
+    ips = [
+        observable['value']
+        for observable in observables
+        if observable['type'] == 'ip'
+    ]
+
+    data = [
+        {
+            'id': f'ref-shodan-search-ip-{ip}',
+            'title': 'Search for this IP',
+            'description': 'Lookup this IP on Shodan',
+            'url': current_app.config['SHODAN_SEARCH_URL'].format(ip=ip),
+            'categories': ['Search', 'Shodan'],
+        }
+        for ip in map(lambda ip: quote(ip, safe=''), ips)
+    ]
+
+    return jsonify_data(data)
