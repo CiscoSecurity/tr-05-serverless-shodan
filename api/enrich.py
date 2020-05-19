@@ -41,7 +41,7 @@ def get_browse_pivot(ips):
 def get_search_pivots(observables):
     return [
         {
-            'id': f'ref-shodan-search-{type}-{value}',
+            'id': f'ref-shodan-search-{type}-{quote(value, safe="")}',
             'title':
                 'Search for this'
                 f' {current_app.config["SHODAN_OBSERVABLE_TYPES"][type]}',
@@ -49,7 +49,9 @@ def get_search_pivots(observables):
                 'Lookup this '
                 f'{current_app.config["SHODAN_OBSERVABLE_TYPES"][type]}'
                 ' on Shodan',
-            'url': current_app.config['SHODAN_SEARCH_URL'].format(value=value),
+            'url': current_app.config['SHODAN_SEARCH_URL'].format(
+                value=quote(value, safe='')
+            ),
             'categories': ['Search', 'Shodan'],
         }
         for value, type in observables.items()
@@ -83,8 +85,7 @@ def refer_observables():
         if type == 'ip'
     ]
 
-    data = []
-    data += get_search_pivots(observables)
+    data = get_search_pivots(observables)
     data += get_browse_pivot(ips)
 
     return jsonify_data(data)
