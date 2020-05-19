@@ -73,4 +73,3 @@ export URL=<...>
 http POST "${URL}"/health
 http POST "${URL}"/observe/observables < observables.json
 ```
-
