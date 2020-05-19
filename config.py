@@ -17,4 +17,11 @@ class Config:
 
     SHODAN_UI_URL = 'https://www.shodan.io'
 
-    SHODAN_SEARCH_URL = 'https://www.shodan.io/search?query={ip}'
+    SHODAN_SEARCH_URL = 'https://www.shodan.io/search?query={value}'
+
+    SHODAN_BROWSE_URL = 'https://www.shodan.io/host/{ip}'
+
+    SHODAN_OBSERVABLE_TYPES = {
+        'ip': 'IP',
+        'domain': 'domain',
+    }
