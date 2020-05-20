@@ -1,5 +1,4 @@
 from functools import partial
-from collections import defaultdict
 
 from flask import Blueprint, current_app
 from urllib.parse import quote
@@ -25,67 +24,45 @@ def observe_observables():
     return jsonify_data({})
 
 
-def get_browse_pivot(ips):
-    return [
-        {
-            'id': f'ref-shodan-detail-ip-{ip}',
-            'title': 'Browse IP',
-            'description': 'Browse this IP on Shodan',
-            'url': current_app.config['SHODAN_BROWSE_URL'].format(ip=ip),
-            'categories': ['Browse', 'Shodan'],
-        }
-        for ip in map(lambda ip: quote(ip, safe=''), ips)
-    ]
+def get_browse_pivot(ip):
+    return {
+        'id': f'ref-shodan-detail-ip-{ip}',
+        'title': 'Browse IP',
+        'description': 'Browse this IP on Shodan',
+        'url': current_app.config['SHODAN_BROWSE_URL'].format(ip=ip),
+        'categories': ['Browse', 'Shodan'],
+    }
 
 
-def get_search_pivots(observables):
-    return [
-        {
-            'id': f'ref-shodan-search-{type}-{quote(value, safe="")}',
-            'title':
-                'Search for this'
-                f' {current_app.config["SHODAN_OBSERVABLE_TYPES"][type]}',
-            'description':
-                'Lookup this '
-                f'{current_app.config["SHODAN_OBSERVABLE_TYPES"][type]}'
-                ' on Shodan',
-            'url': current_app.config['SHODAN_SEARCH_URL'].format(
-                value=quote(value, safe='')
-            ),
-            'categories': ['Search', 'Shodan'],
-        }
-        for value, type in observables.items()
-    ]
-
-
-def group_observables(relay_input):
-    # Leave only unique (value, type) pairs grouped by value.
-
-    observables = defaultdict(set)
-
-    for observable in relay_input:
-        value = observable['value']
-        type = observable['type'].lower()
-
-        # Discard any unsupported type.
-        if type in current_app.config['SHODAN_OBSERVABLE_TYPES']:
-            observables[value] = type
-
-    return observables
+def get_search_pivot(type, value):
+    return {
+        'id': f'ref-shodan-search-{type}-{quote(value, safe="")}',
+        'title':
+            'Search for this'
+            f' {current_app.config["SHODAN_OBSERVABLE_TYPES"][type]}',
+        'description':
+            'Lookup this '
+            f'{current_app.config["SHODAN_OBSERVABLE_TYPES"][type]}'
+            ' on Shodan',
+        'url': current_app.config['SHODAN_SEARCH_URL'].format(
+            value=quote(value, safe='')
+        ),
+        'categories': ['Search', 'Shodan'],
+    }
 
 
 @enrich_api.route('/refer/observables', methods=['POST'])
 def refer_observables():
-    relay_input = get_observables()
-    observables = group_observables(relay_input)
+    observables = get_observables()
+    data = []
 
-    ips = [
-        value
-        for value, type in observables.items()
-        if type == 'ip'
-    ]
+    for observable in observables:
+        value = observable['value']
+        type = observable['type'].lower()
 
-    data = get_search_pivots(observables)
-    data += get_browse_pivot(ips)
+        if type in current_app.config['SHODAN_OBSERVABLE_TYPES']:
+            data.append(get_search_pivot(type, value))
+            if type == 'ip':
+                data.append(get_browse_pivot(value))
 
     return jsonify_data(data)
