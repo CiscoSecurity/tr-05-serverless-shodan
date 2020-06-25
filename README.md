@@ -172,7 +172,7 @@ If you want to test the live Lambda you may use any HTTP client (e.g. Postman).
   - Builds a search link per each supported observable to pivot back to the
   underlying external service and look up the observable there.
   - Builds a browse link per each supported observable to pivot back
-  directly to the observable page if there is one.
+  directly to the observable page.
   - Returns a list of those links.
 
 ### Supported Types of Observables
