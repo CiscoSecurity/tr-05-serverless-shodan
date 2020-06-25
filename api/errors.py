@@ -2,6 +2,7 @@ INVALID_ARGUMENT = 'invalid argument'
 UNKNOWN = 'unknown'
 NOT_FOUND = 'not found'
 INTERNAL = 'internal error'
+PERMISSION_DENIED = 'permission denied'
 
 
 class CTRBaseError(Exception):
@@ -16,6 +17,14 @@ class CTRBaseError(Exception):
         return {'type': self.type_,
                 'code': self.code.lower(),
                 'message': self.message}
+
+
+class InvalidJWTError(CTRBaseError):
+    def __init__(self):
+        super().__init__(
+            PERMISSION_DENIED,
+            'Invalid Authorization Bearer JWT.'
+        )
 
 
 class ShodanUnexpectedError(CTRBaseError):

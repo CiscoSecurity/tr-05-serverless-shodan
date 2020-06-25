@@ -2,6 +2,8 @@ from http import HTTPStatus
 
 from pytest import fixture
 
+from tests.unit.api.utils import headers
+
 
 def routes():
     yield '/deliberate/observables'
@@ -20,9 +22,9 @@ def invalid_json():
 
 
 def test_enrich_call_with_invalid_json_failure(
-        route, client,  invalid_json, invalid_json_expected_payload
+        route, client,  invalid_json, invalid_json_expected_payload, valid_jwt
 ):
-    response = client.post(route,  json=invalid_json)
+    response = client.post(route, headers=headers(valid_jwt), json=invalid_json)
 
     assert response.status_code == HTTPStatus.OK
     assert response.json == invalid_json_expected_payload
@@ -34,8 +36,8 @@ def valid_json():
 
 
 def test_enrich_call_success(
-        route, client,  valid_json, success_expected_payload
+        route, client,  valid_json, valid_jwt, success_expected_payload
 ):
-    response = client.post(route, json=valid_json)
+    response = client.post(route, headers=headers(valid_jwt), json=valid_json)
     assert response.status_code == HTTPStatus.OK
     assert response.json == success_expected_payload
