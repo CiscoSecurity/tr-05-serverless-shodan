@@ -5,7 +5,6 @@ from unittest import mock
 
 from tests.unit.payloads_for_tests import (EXPECTED_RESPONSE_404_ERROR,
                                            EXPECTED_RESPONSE_500_ERROR)
-from tests.unit.api.utils import headers
 
 
 def routes():
@@ -33,22 +32,22 @@ def shodan_response(*, status_code):
     return mock_response
 
 
-def test_health_call_success(route, client, shodan_request, valid_jwt):
+def test_health_call_success(route, client, shodan_request):
     shodan_request.return_value = shodan_response(status_code=200)
-    response = client.post(route, headers=headers(valid_jwt))
+    response = client.post(route)
     assert response.status_code == HTTPStatus.OK
     assert response.get_json() == {'data': {'status': 'ok'}}
 
 
-def test_health_call_404(route, client, shodan_request, valid_jwt):
+def test_health_call_404(route, client, shodan_request):
     shodan_request.return_value = shodan_response(status_code=404)
-    response = client.post(route, headers=headers(valid_jwt))
+    response = client.post(route)
     assert response.status_code == HTTPStatus.OK
     assert response.get_json() == EXPECTED_RESPONSE_404_ERROR
 
 
-def test_health_call_500(route, client, shodan_request, valid_jwt):
+def test_health_call_500(route, client, shodan_request):
     shodan_request.return_value = shodan_response(status_code=500)
-    response = client.post(route, headers=headers(valid_jwt))
+    response = client.post(route)
     assert response.status_code == HTTPStatus.OK
     assert response.get_json() == EXPECTED_RESPONSE_500_ERROR

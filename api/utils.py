@@ -1,17 +1,5 @@
-from authlib.jose import jwt
-from authlib.jose.errors import JoseError
-from flask import request, current_app, jsonify
-
-from api.errors import InvalidJWTError, BadRequestError
-
-
-def get_jwt():
-    try:
-        scheme, token = request.headers['Authorization'].split()
-        assert scheme.lower() == 'bearer'
-        return jwt.decode(token, current_app.config['SECRET_KEY'])
-    except (KeyError, ValueError, AssertionError, JoseError):
-        raise InvalidJWTError
+from flask import request, jsonify
+from api.errors import BadRequestError
 
 
 def get_json(schema):

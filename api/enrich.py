@@ -4,7 +4,7 @@ from flask import Blueprint, current_app
 from urllib.parse import quote
 
 from api.schemas import ObservableSchema
-from api.utils import get_json, jsonify_data, get_jwt
+from api.utils import get_json, jsonify_data
 
 enrich_api = Blueprint('enrich', __name__)
 
@@ -53,7 +53,6 @@ def get_search_pivot(type, value):
 
 @enrich_api.route('/refer/observables', methods=['POST'])
 def refer_observables():
-    _ = get_jwt()
     observables = get_observables()
     data = []
 
