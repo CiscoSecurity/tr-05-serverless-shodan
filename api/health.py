@@ -12,7 +12,6 @@ health_api = Blueprint('health', __name__)
 
 @health_api.route('/health', methods=['POST'])
 def health():
-
     response = requests.head(current_app.config['SHODAN_UI_URL'],
                              headers=current_app.config['CTR_HEADERS'])
     if response.ok:
