@@ -129,7 +129,7 @@ old `URL` forever.
 
 ### Threat Response Module
 
-Now, the only things left to do is to follow one of these URLs to navigate 
+Now, the only thing left to do is to follow one of these URLs to navigate 
 to Threat Response page in your region and create the Shodan module using your Lambda's URL:
 - US: https://visibility.amp.cisco.com/settings/modules/available/7ac340fb-de7b-4407-80b1-d192c4d4e856/new
 - EU: https://visibility.eu.amp.cisco.com/settings/modules/available/21836330-11bd-47f1-9467-2654a2df1880/new
