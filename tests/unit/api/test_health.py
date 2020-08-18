@@ -69,5 +69,3 @@ def test_health_with_ssl_error(route, client, shodan_request):
 
     data = response.get_json()
     assert data == EXPECTED_RESPONSE_SSL_ERROR
-
-
