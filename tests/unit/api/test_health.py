@@ -1,10 +1,14 @@
 from http import HTTPStatus
+from requests.exceptions import SSLError
 
 from pytest import fixture
 from unittest import mock
 
-from tests.unit.payloads_for_tests import (EXPECTED_RESPONSE_404_ERROR,
-                                           EXPECTED_RESPONSE_500_ERROR)
+from tests.unit.payloads_for_tests import (
+    EXPECTED_RESPONSE_404_ERROR,
+    EXPECTED_RESPONSE_500_ERROR,
+    EXPECTED_RESPONSE_SSL_ERROR
+)
 
 
 def routes():
@@ -51,3 +55,17 @@ def test_health_call_500(route, client, shodan_request):
     response = client.post(route)
     assert response.status_code == HTTPStatus.OK
     assert response.get_json() == EXPECTED_RESPONSE_500_ERROR
+
+
+def test_health_with_ssl_error(route, client, shodan_request):
+    mock_exception = mock.MagicMock()
+    mock_exception.reason.args.__getitem__().verify_message \
+        = 'self signed certificate'
+    shodan_request.side_effect = SSLError(mock_exception)
+
+    response = client.post(route)
+
+    assert response.status_code == HTTPStatus.OK
+
+    data = response.get_json()
+    assert data == EXPECTED_RESPONSE_SSL_ERROR
