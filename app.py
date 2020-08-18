@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 from api.enrich import enrich_api
 from api.health import health_api
@@ -33,6 +33,19 @@ def handle_error(exception):
 @app.errorhandler(CTRBaseError)
 def handle_tr_formatted_error(error):
     return jsonify_errors(error.json)
+
+
+@app.after_request
+def after_request(response):
+    app.logger.error(response.data)
+    return response
+
+
+@app.before_request
+def before_request():
+    app.logger.error(request.args)
+    app.logger.error(request.headers)
+    app.logger.error(request.data)
 
 
 if __name__ == '__main__':
