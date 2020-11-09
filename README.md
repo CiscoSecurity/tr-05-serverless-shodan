@@ -175,9 +175,6 @@ If you want to test the live Lambda you may use any HTTP client (e.g. Postman).
   - Builds a browse link per each supported observable to pivot back
   directly to the observable page.
   - Returns a list of those links.
-  
-- `POST /version`
-  - Returns the current version of the application.
 
 ### Supported Types of Observables
 
