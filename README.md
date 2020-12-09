@@ -13,7 +13,7 @@ easily packaged and deployed as an AWS Lambda Function using
 
 ## Rationale
 
-1. We need an application that will translate API requests from SecureX Threat Response
+1. We need an application that will translate API requests from Threat Response
 to the third-party integration, and vice versa. This application is provided
 here in the GitHub repository, and we are going to install it in AWS Lambda
 using Zappa.
@@ -128,10 +128,10 @@ command does not change the current `URL`. The `undeploy` command destroys the
 old `URL` forever.
 
 
-### SecureX Threat Response Module
+### Threat Response Module
 
 Now, the only thing left to do is to follow one of these URLs to navigate 
-to SecureX Threat Response page in your region and create the Shodan module using your Lambda's URL:
+to Threat Response page in your region and create the Shodan module using your Lambda's URL:
 - US: https://securex.us.security.cisco.com/settings/modules/available/7ac340fb-de7b-4407-80b1-d192c4d4e856/new
 - EU: https://securex.eu.security.cisco.com/settings/modules/available/21836330-11bd-47f1-9467-2654a2df1880/new
 - APJC: https://securex.apjc.security.cisco.com/settings/modules/available/bab4b94f-a8b8-4504-8252-ed20aaed9d11/new
