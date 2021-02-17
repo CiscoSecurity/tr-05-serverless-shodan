@@ -28,8 +28,10 @@ You can perform two kinds of testing:
   `flake8 code`
 
 - Run the suite of unit tests and measure the code coverage:
-  `cd code`
-  `coverage run --source api/ -m pytest --verbose tests/unit/ && coverage report`
+  ```
+  cd code
+  coverage run --source api/ -m pytest --verbose tests/unit/ && coverage report
+  ```
 
 **NOTE.** If you need input data for testing purposes you can use data from the
 [observables.json](code/observables.json) file.
