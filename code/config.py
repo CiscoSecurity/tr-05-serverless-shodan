@@ -1,12 +1,9 @@
-import os
-
-from __version__ import VERSION
+import json
 
 
 class Config:
-    VERSION = VERSION
-
-    SECRET_KEY = os.environ.get('SECRET_KEY', '')
+    settings = json.load(open('container_settings.json', 'r'))
+    VERSION = settings['VERSION']
 
     CTR_HEADERS = {
         'User-Agent': (
