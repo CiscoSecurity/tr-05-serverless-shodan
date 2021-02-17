@@ -1,69 +1,52 @@
 {
-    "title": "Pulsedive",
-    "default_name": "Pulsedive",
-    "short_description": "Pulsedive threat intelligence enriches any domain, URL, or IP. Scan new indicators, pivot to search on any data point, and investigate threats.",
-    "description": "Pulsedive threat intelligence offers a community platform that scans, enriches, and scores millions of indicators of compromise, setting the foundation for powerful threat investigation and research capabilities. Register for a free account and API key to access the intelligence sourced and contextualized from dozens of feeds and submitted by users all over the world.\n\nAdditionally, leverage Pulsedive to run passive or active scans on any indicator, investigate shared threat properties and attributes, and pull related threat news/summaries from the web.\n## Snapshot of Pulsedive's API\n\n### Retrieve Indicator Data\n- Risk scores and risk factors\n- Registration timeline\n- Source feeds and comments\n- Associated threats\n- Ports and protocols\n- Web technologies\n- WHOIS registration\n- Location data\n- DNS records\n- Query strings\n- HTTP headers\n- SSL certificate metadata\n- Cookies\n- Meta tags\n- Mail servers\n- Redirects\n- Related domains and urls\n\n### Retrieve Threat Data\n- Related news\n- Comments\n- Risky properties\n- Source feeds\n- Indicators\n\n### Retrieve Feed Data\n- Name and organization\n- Threats\n- Indicators\n\n### Explore (Search) Our Database\n- Create queries using almost any data point(s) to pivot across indicators, threats, or feeds.\n\n### Scan Indicators\n- Perform passive or active scans of hosts to retrieve live data on-demand.",
-    "tips": "When configuring the Pulsedive module, you must first gather some information from your Pulsedive account, deploy the [Pulsedive Serverless Relay](https://github.com/CiscoSecurity/tr-05-serverless-pulsedive), and then add the Pulsedive module in SecureX Threat Response   \n\n1. Log into Pulsedive, click **ACCOUNT**\n2. Copy the **API KEY** into a file, or leave the tab open\n3. Deploy [Pulsedive Serverless Relay](https://github.com/CiscoSecurity/tr-05-serverless-pulsedive#pulsedive-relay-api)\n4. Complete the **Add New Pulsedive Integration Module** form:\n    - **Module Name** - Leave the default name or enter a name that is meaningful to you\n    - **URL** - The URL of the Pulsedive Serverless Relay\n    - **API Key** - Enter the Pulsedive API Key\n    - **Entities Limit** - Enter the limit that restricts the maximum number of CTIM entities of each type returned in a single response per each requested observable. Must be a positive integer. Defaults to 100 (if unset or incorrect)\n5. Click **Save** to complete the Pulsedive module configuration",
-    "external_references": [
-        {
-            "label": "About",
-            "link": "https://pulsedive.com/about/"
-        },
-        {
-            "label": "Contact",
-            "link": "mailto:support@pulsedive.com"
-        }
-    ],
-    "configuration_spec": [
-        {
-            "key": "url",
-            "type": "string",
-            "label": "URL",
-            "tooltip": "The base URL of the Serverless Relay",
-            "required": true
-        },
-        {
-            "key": "custom_key",
-            "type": "api_key",
-            "label": "API Key",
-            "tooltip": "The Pulsedive API Key",
-            "required": true
-        },
-        {
-            "key": "custom_CTR_ENTITIES_LIMIT",
-            "type": "integer",
-            "label": "Entities Limit",
-            "tooltip": "Restricts the maximum number of `Indicators` and `Sightings`",
-            "required": false
-        }
-    ],
-    "capabilities": [
-        {
-            "id": "health",
-            "description": "Performs health check against Pulsedive API."
-        },
-        {
-            "id": "observe",
-            "description": "Query Pulsedive for IP, IPv6, Domain, and URL return Sighting, Judgement, Verdict, and Indicator"
-        },
-        {
-            "id": "refer",
-            "description": "Pivot on IP, IPv6, Domain, and URL to Pulsedive UI"
-        }
-    ],
-    "properties": {
-        "url": "https://ciscohosted.url",
-        "supported-apis": [
-            "health",
-            "observe/observables",
-            "refer/observables"
-        ],
-        "auth-type": "configuration-token",
-        "configuration-token-alg": "RS256",
-        "custom_jwks_host": "visibility.amp.cisco.com"
+  "title": "Shodan",
+  "default_name": "Shodan",
+  "short_description": "Shodan is the world's first search engine for Internet-connected devices.",
+  "description": "Shodan is a search engine that lets the user find specific types of computers (webcams, routers, servers, etc.) connected to the internet using a variety of filters. Some have also described it as a search engine of service banners, which are metadata that the server sends back to the client. This can be information about the server software, what options the service supports, a welcome message or anything else that the client can find out before interacting with the server. Shodan data and infrastructure povide your organization with real-time information about the entire Internet.\n\n**Security Beyond the Perimeter:**  \nThe Shodan platform helps you monitor not just your own network but also the entire Internet. Detect data leaks to the cloud, phishing websites, compromised databases and more. The Enterprise Data License gives you the tools to monitor all connected devices on the Internet.\n\n**Market Intelligence for the Connected World:**  \nUse the Shodan platform to see which products are popular on the Internet and how the markets are shifting over time. Which areas have the most home automation systems? How popular are the latest smart TVs? Purchase the Enterprise Data License to understand the modern connected world.\n\n**New Age of Fraud Prevention:**  \nWhen was the last time you saw a refrigerator buy a computer? Use Shodan to detect whether the purchase is being made from an IoT device, compromised database, VPN, Tor or any type of unusual device.\n\n**Platform Components:**\n- Bulk DataFeed: Download all of the data that Shodan collects to build your own database of Internet-connected devices.\n- On-DemandScanning: Use Shodan's global infrastructure to scan networks ranging from individual IPs up to the entire Internet.\n- UnlimitedAccess: The Enterprise Data License provides unlimited access to Shodan for all employees of the organization.",
+  "tips": "When configuring the Shodan integration deploy the [Shodan Serverless Relay](https://github.com/CiscoSecurity/tr-05-serverless-shodan), and then add the Shodan Module\n\n1. Deploy [Shodan Serverless Relay](https://github.com/CiscoSecurity/tr-05-serverless-shodan#shodan-relay-api)\n2. Complete the **Add New Shodan Module** form:\n    - **Module Name** - Leave the default name or enter a name that is meaningful to you.\n    - **URL** - The URL of the Shodan Serverless Relay\n3. Click **Save** to complete the Shodan module configuration.",
+  "external_references": [
+    {
+      "label": "Free Trial",
+      "link": "https://account.shodan.io/register"
     },
-    "flags": [
-        "serverless"
-    ],
-    "logo": "data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6IzMwOTRjMjt9LmNscy0ye2ZpbGw6IzA2OTt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTAuNTMsMjkuNzZjLS4xNy0uMjQsMi4zOC0yLjc3LDIuNTYtM2EyNC45MywyNC45MywwLDAsMSw3LjA3LTUuMWM2LTIuNzgsMTQuNTEtMi4wNiwyMC4wOSwxLjUsMTAuMTYsNi40OCw5LjQ4LDIwLDMuODQsMjkuMjRINjcuNzhzLTItNS4yMS0zLjIzLTcuNzhjLS40NC0uODctMS40My0zLjUxLTIuMzMtMS42NHMtMS42OCwzLjU0LTIuNDcsNS4zM2MtMS45MSw0LjMtMy43MSw4LjY2LTUuNTgsMTMtLjE4LjQyLS41Ni45Mi0xLC43M2EuODUuODUsMCwwLDEtLjM4LS41OGMtMi42NS04LjQ2LTUtMTctNy42Mi0yNS40OC0uMTctLjUyLS4zMy0xLS41LTEuNTdTNDQsMzAuODcsNDMsMzEuMzRhMS4yMSwxLjIxLDAsMCwwLS41MS41NCwxMC41MiwxMC41MiwwLDAsMC0uNTMsMS4xOWMtLjc1LDEuOTItMS40NiwzLjg1LTIuMTgsNS43Ny0uNiwxLjU3LTEuMTcsMy4xNS0xLjc1LDQuNzMtLjkyLDIuNTUtMS44MSw1LjExLTIuNzcsNy42NCwwLC4xMi0uMzcsMS4yMy0uNTMsMS4yM0gxNi41Yy0uMzEsMC0xLjI4LTIuMTMtMS40MS0yLjM3YTMxLjIzLDMxLjIzLDAsMCwxLTIuMjMtNC43NiwxOS40MiwxOS40MiwwLDAsMS0uNDItMTEsMTcuMzcsMTcuMzcsMCwwLDEsNi4xNy05Ljc3LDIyLjQ4LDIyLjQ4LDAsMCwxLDExLjEzLTQuMjVBMjMuNiwyMy42LDAsMCwxLDUwLjUzLDI5Ljc2WiIvPjxwYXRoIGNsYXNzPSJjbHMtMiIgZD0iTTIxLjA1LDU4LjM1SDM4LjU0Yy43My0yLjgxLDEuNTQtNS42MSwyLjM4LTguMzkuNC0xLjMxLjgxLTIuNjIsMS4yMi0zLjkzYS43My43MywwLDAsMSwuNTMtLjQyLjY5LjY5LDAsMCwxLC41OS4zNWMuODgsMi43Nyw1LjMxLDE4LjI0LDUuMzEsMTguMjQuNzYsMi4zOSwxLjU0LDQuNzgsMi40LDcuMTQuMzcsMSwxLjI4LDMuODQsMS44MSwzLjg0czEuMzgtMi4yLDEuNTktMi42NGMuOTQtMS45NCwxLjc2LTMuOTQsMi41Ny01Ljk0LDEuNTItMy43MiwzLjMzLTcuNDgsNC43MS0xMS4yNmExMy43NiwxMy43NiwwLDAsMSwxLTIuMjdjLjExLS4xOC4yNS0uMzguNDUtLjQycy43NS40OC44OC43OGwxLjY0LDQuNjhMNzksNTguMzVTNjguNzksNjkuMjIsNjUuNDgsNzIuNTMsNTEuNzcsODYsNTAuNTksODYsMzcuMzYsNzQuNDIsMzUuOTQsNzMsMjEuMDUsNTguMzUsMjEuMDUsNTguMzVaIi8+PC9zdmc+"
+    {
+      "label": "Contact Sales",
+      "link": "mailto:sales@shodan.io"
+    }
+    ,
+    {
+      "label": "Discover the Platform",
+      "link": "https://enterprise.shodan.io/platform"
+    }
+  ],
+  "configuration_spec": [
+    {
+      "key": "url",
+      "type": "string",
+      "label": "URL",
+      "required": true,
+      "tooltip": "The base URL of the Serverless Relay"
+    }
+  ],
+  "capabilities": [
+    {
+      "id": "health",
+      "description": "Check the health of the Shodan Serverless Relay"
+    },
+    {
+      "id": "refer",
+      "description": "Pivot on IP and Domain to Shodan UI"
+    }
+  ],
+  "properties": {
+    "url": "https://ciscohosted.url",
+    "supported-apis": [
+      "health",
+      "refer/observables"
+    ]
+  },
+  "flags": [
+    "serverless"
+  ],
+  "logo": "data:image/png;base64,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"
 }
