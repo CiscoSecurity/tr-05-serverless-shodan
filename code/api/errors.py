@@ -2,6 +2,7 @@ INVALID_ARGUMENT = 'invalid argument'
 UNKNOWN = 'unknown'
 NOT_FOUND = 'not found'
 INTERNAL = 'internal error'
+HEALTH_CHECK_ERROR = 'health check failed'
 
 
 class CTRBaseError(Exception):
@@ -57,4 +58,12 @@ class ShodanSSLError(CTRBaseError):
         super().__init__(
             UNKNOWN,
             f'Unable to verify SSL certificate: {message}'
+        )
+
+
+class ShodanWatchdogError(CTRBaseError):
+    def __init__(self):
+        super().__init__(
+            HEALTH_CHECK_ERROR,
+            'Invalid Health Check'
         )
