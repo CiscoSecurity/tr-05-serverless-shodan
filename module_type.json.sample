@@ -6,10 +6,6 @@
   "tips": "When configuring this integration, you must add the Shodan Module to your organization. \n\n1. Complete the **Add New Shodan Module** form:\n    - **Module Name** - Leave the default name or enter a name that is meaningful to you. \n2. Click **Save** to complete the Shodan module configuration.",
   "external_references": [
     {
-      "label": "Free Trial",
-      "link": "https://account.shodan.io/register"
-    },
-    {
       "label": "Contact Sales",
       "link": "mailto:sales@shodan.io"
     }
