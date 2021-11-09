@@ -4,8 +4,6 @@ from pytest import fixture
 
 
 def routes():
-    yield '/deliberate/observables'
-    yield '/observe/observables'
     yield '/refer/observables'
 
 
