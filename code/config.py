@@ -12,7 +12,7 @@ class Config:
         )
     }
 
-    SHODAN_UI_URL = 'http://www.shodan.io'
+    SHODAN_UI_URL = 'https://www.shodan.io'
 
     SHODAN_SEARCH_URL = 'https://www.shodan.io/search?query={value}'
 
